@@ -2,17 +2,20 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour
+namespace Menu
 {
-    [SerializeField] private Button PlayButton;
-
-    private void Awake()
+    public class MenuController : MonoBehaviour
     {
-        PlayButton.onClick.AddListener(StartGame);
-    }
+        [SerializeField] private Button PlayButton;
 
-    private void StartGame()
-    {
-        SceneManager.LoadScene("Gameplay");
+        private void Awake()
+        {
+            PlayButton.onClick.AddListener(StartGame);
+        }
+
+        private void StartGame()
+        {
+            SceneManager.LoadScene("Gameplay");
+        }
     }
 }
