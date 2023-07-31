@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gameplay
 {
@@ -8,9 +9,11 @@ namespace Gameplay
         [SerializeField] private float rotationSpeed = 180f;
 
         private RectTransform rectTransform;
+        private Action OnHit;
 
-        private void Start()
+        public void Init(Action onHit)
         {
+            OnHit = onHit;
             rectTransform = GetComponent<RectTransform>();
         }
 
@@ -24,6 +27,13 @@ namespace Gameplay
             var rotationAngle = rotationSpeed * Time.deltaTime;
             var newRotation = Quaternion.Euler(0f, 0f, rotation.eulerAngles.z + rotationAngle);
             rectTransform.rotation = newRotation;
+        }
+
+        public void Hit()
+        {
+            OnHit();
+            // Lógica de exibir animação
+            Destroy(gameObject);
         }
     }
 }
