@@ -8,6 +8,7 @@ namespace Gameplay
 {
     public class ShapeSpawnController : MonoBehaviour
     {
+        [SerializeField] private GameplayController GameplayController;
         [SerializeField] private RectTransform Canvas;
         [SerializeField] private List<Shape> Shapes;
 
@@ -36,6 +37,7 @@ namespace Gameplay
 
                 var shape = Instantiate(randomShape, transform);
                 shape.GetComponent<RectTransform>().anchoredPosition = randomPosition;
+                shape.Init(GameplayController.IncreaseScore);
 
                 yield return new WaitForSeconds(SpawnInterval);
             }
