@@ -15,13 +15,13 @@ namespace Gameplay
         void Start()
         {
             ShapeSpawnController.Init(this);
-            ScoreManager.Instance.Score = 0;
+            ScoreManager.Instance.ClearScore();
         }
 
         public void IncreaseScore()
         {
             Score++;
-            ScoreManager.Instance.Score = Score;
+            ScoreManager.Instance.SetScore(Score);
             ScoreController.SetScore(Score);
         }
 

@@ -6,14 +6,14 @@ namespace Menu
 {
     public class MenuController : MonoBehaviour
     {
-        [SerializeField] private Button PlayButton;
+        [SerializeField] Button PlayButton;
 
-        private void Awake()
+        void Awake()
         {
             PlayButton.onClick.AddListener(StartGame);
         }
 
-        private void StartGame()
+        void StartGame()
         {
             SceneManager.LoadScene("Gameplay");
         }
