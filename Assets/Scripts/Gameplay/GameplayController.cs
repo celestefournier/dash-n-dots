@@ -1,29 +1,32 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Gameplay
 {
     public class GameplayController : MonoBehaviour
     {
-        [SerializeField] private ScoreController ScoreController;
-        [SerializeField] private ShapeSpawnController ShapeSpawnController;
+        [SerializeField] ScoreController ScoreController;
+        [SerializeField] ShapeSpawnController ShapeSpawnController;
 
         public bool IsGameOver;
-        private int Score;
+        int Score;
 
         void Start()
         {
             ShapeSpawnController.Init(this);
+            ScoreManager.Instance.Score = 0;
         }
 
         public void IncreaseScore()
         {
             Score++;
+            ScoreManager.Instance.Score = Score;
             ScoreController.SetScore(Score);
         }
 
         public void GameOver()
         {
-            Time.timeScale = 0;
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
