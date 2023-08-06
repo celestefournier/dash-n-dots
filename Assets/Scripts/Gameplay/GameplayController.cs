@@ -7,7 +7,7 @@ namespace Gameplay
         [SerializeField] private ScoreController ScoreController;
         [SerializeField] private ShapeSpawnController ShapeSpawnController;
 
-        public bool GameOver;
+        public bool IsGameOver;
         private int Score;
 
         void Start()
@@ -19,6 +19,11 @@ namespace Gameplay
         {
             Score++;
             ScoreController.SetScore(Score);
+        }
+
+        public void GameOver()
+        {
+            Time.timeScale = 0;
         }
     }
 }

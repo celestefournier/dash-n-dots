@@ -24,7 +24,7 @@ namespace Gameplay
             var halfCameraWidth = cameraHeight * Camera.aspect / 2;
             var halfCameraHeight = cameraHeight / 2;
 
-            while (!GameplayController.GameOver)
+            while (!GameplayController.IsGameOver)
             {
                 var randomShape = Shapes[Random.Range(0, Shapes.Count)];
                 var spriteSize = randomShape.GetComponent<SpriteRenderer>().bounds.size;
