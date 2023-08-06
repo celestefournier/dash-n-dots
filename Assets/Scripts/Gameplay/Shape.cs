@@ -1,32 +1,25 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gameplay
 {
     public class Shape : MonoBehaviour
     {
-        [SerializeField] private float fallSpeed = 300f;
-        [SerializeField] private float rotationSpeed = 180f;
+        [SerializeField] float FallSpeed = 300f;
+        [SerializeField] float RotationSpeed = 180f;
 
-        private RectTransform rectTransform;
-        private Action OnHit;
+        Action OnHit;
 
         public void Init(Action onHit)
         {
             OnHit = onHit;
-            rectTransform = GetComponent<RectTransform>();
         }
 
-        private void Update()
+        void Update()
         {
-            var position = rectTransform.anchoredPosition;
-            position.y -= fallSpeed * Time.deltaTime;
-            rectTransform.anchoredPosition = position;
-
-            var rotation = rectTransform.rotation;
-            var rotationAngle = rotationSpeed * Time.deltaTime;
-            var newRotation = Quaternion.Euler(0f, 0f, rotation.eulerAngles.z + rotationAngle);
-            rectTransform.rotation = newRotation;
+            transform.Translate(0, -FallSpeed * Time.deltaTime, 0, Space.World);
+            transform.Rotate(0f, 0f, RotationSpeed * Time.deltaTime, Space.World);
         }
 
         public void Hit()

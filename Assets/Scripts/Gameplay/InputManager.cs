@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace Gameplay
 {
     public class InputManager : MonoBehaviour
     {
-        [SerializeField] private GraphicRaycaster GraphicRaycaster;
-        [SerializeField] private EventSystem EventSystem;
+        [SerializeField] Camera cam;
 
-        private void Update()
+        void Update()
         {
             if (Input.touchCount <= 0)
                 return;
@@ -29,18 +25,16 @@ namespace Gameplay
             }
         }
 
-        private void DetectCollision(Vector2 position, string shape)
+        void DetectCollision(Vector2 position, string shape)
         {
-            var pointerEventData = new PointerEventData(EventSystem) {position = position};
-            var results = new List<RaycastResult>();
+            Ray ray = cam.ScreenPointToRay(position);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-            GraphicRaycaster.Raycast(pointerEventData, results);
-
-            foreach (RaycastResult result in results)
+            if (hit)
             {
-                if (result.gameObject.CompareTag(shape))
+                if (hit.transform.CompareTag(shape))
                 {
-                    result.gameObject.GetComponent<Shape>().Hit();
+                    hit.transform.GetComponent<Shape>().Hit();
                 }
             }
         }

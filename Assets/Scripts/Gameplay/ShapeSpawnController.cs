@@ -1,42 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Gameplay
 {
     public class ShapeSpawnController : MonoBehaviour
     {
-        [SerializeField] private GameplayController GameplayController;
-        [SerializeField] private RectTransform Canvas;
-        [SerializeField] private List<Shape> Shapes;
+        [SerializeField] Camera Camera;
+        [SerializeField] List<Shape> Shapes;
 
-        private const float SpawnInterval = 3f;
-        private bool GameOver;
+        const float SpawnInterval = 3f;
+        GameplayController GameplayController;
 
-        private GraphicRaycaster GraphicRaycaster;
-        private EventSystem EventSystem;
-
-        private void Start()
+        public void Init(GameplayController gameplayController)
         {
+            GameplayController = gameplayController;
             StartCoroutine(Spawn());
         }
 
-        private IEnumerator Spawn()
+        IEnumerator Spawn()
         {
-            while (!GameOver)
+            var cameraHeight = 2f * Camera.orthographicSize;
+            var halfCameraWidth = cameraHeight * Camera.aspect / 2;
+            var halfCameraHeight = cameraHeight / 2;
+
+            while (!GameplayController.GameOver)
             {
                 var randomShape = Shapes[Random.Range(0, Shapes.Count)];
-                var shapeRect = randomShape.GetComponent<RectTransform>().rect;
+                var spriteSize = randomShape.GetComponent<SpriteRenderer>().bounds.size;
+                var spriteMargin = spriteSize.x / 2;
 
-                var canvas = Canvas.rect;
-                var x = Random.Range(-canvas.width / 2 + shapeRect.width / 2, canvas.width / 2 - shapeRect.width / 2);
-                var y = Canvas.rect.height / 2 + shapeRect.height / 2;
-                Vector2 randomPosition = new Vector2(x, y);
+                var randomX = Random.Range(-halfCameraWidth + spriteMargin, halfCameraWidth - spriteMargin);
+                var spawnPosition = new Vector3(randomX, halfCameraHeight + spriteSize.y / 2);
 
-                var shape = Instantiate(randomShape, transform);
-                shape.GetComponent<RectTransform>().anchoredPosition = randomPosition;
+                var shape = Instantiate(randomShape, spawnPosition, Quaternion.identity, transform);
                 shape.Init(GameplayController.IncreaseScore);
 
                 yield return new WaitForSeconds(SpawnInterval);
