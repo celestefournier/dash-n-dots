@@ -22,6 +22,7 @@ namespace Gameplay
         {
             Score++;
             ScoreManager.Instance.SetScore(Score);
+            AudioManager.Instance.PlaySound(SoundEffect.Score);
             ScoreController.SetScore(Score);
         }
 

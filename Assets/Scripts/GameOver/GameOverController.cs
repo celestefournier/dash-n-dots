@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace GameOver
 {
@@ -16,8 +15,8 @@ namespace GameOver
         [SerializeField] private TextMeshProUGUI ThirdPlaceScore;
 
         [Header("Buttons")]
-        [SerializeField] Button RetryButton;
-        [SerializeField] Button MenuButton;
+        [SerializeField] ButtonController RetryButton;
+        [SerializeField] ButtonController MenuButton;
 
         void Start()
         {
@@ -28,8 +27,8 @@ namespace GameOver
             SecondPlaceScore.text = playerData.BestScores[1].ToString();
             ThirdPlaceScore.text = playerData.BestScores[2].ToString();
             
-            RetryButton.onClick.AddListener(Retry);
-            MenuButton.onClick.AddListener(Menu);
+            RetryButton.SetClick(Retry);
+            MenuButton.SetClick(Menu);
         }
 
         void Retry()
