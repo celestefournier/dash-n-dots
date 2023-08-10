@@ -121,7 +121,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.2
 --- !u!50 &395081195325358448
 Rigidbody2D:
   serializedVersion: 4
@@ -161,5 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e327f8ff3f14f5fb8a73678aeb0d60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ExplosionParticle: {fileID: 6116827386523077924, guid: 2e49070a38395c54b8b65e7cc6058a51, type: 3}
   FallSpeed: 4
   RotationSpeed: 180

@@ -3,8 +3,9 @@ using UnityEngine;
 
 namespace Gameplay
 {
-    public class TouchTrailController : MonoBehaviour
+    public class TouchEffectController : MonoBehaviour
     {
+        [SerializeField] GameObject TapEffectPrefab;
         [SerializeField] List<TrailRenderer> Trails;
         [SerializeField] Camera Camera;
 
@@ -17,9 +18,6 @@ namespace Gameplay
 
             for (var i = 0; i < Input.touches.Length; i++)
             {
-                if (i >= MaxTrails)
-                    return;
-
                 var touch = Input.GetTouch(i);
                 var touchPosition = Camera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y,
                     Camera.nearClipPlane));
@@ -27,10 +25,13 @@ namespace Gameplay
                 switch (touch.phase)
                 {
                     case TouchPhase.Began:
+                        Instantiate(TapEffectPrefab, touchPosition, Quaternion.identity, transform);
                         Trails[i].transform.position = touchPosition;
                         Trails[i].Clear();
                         break;
                     case TouchPhase.Moved:
+                        if (i >= MaxTrails)
+                            return;
                         Trails[i].transform.position = touchPosition;
                         break;
                 }

@@ -1,11 +1,12 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Gameplay
 {
     public class Shape : MonoBehaviour
     {
+        [SerializeField] GameObject ExplosionParticle;
         [SerializeField] float FallSpeed = 300f;
         [SerializeField] float RotationSpeed = 180f;
 
@@ -25,7 +26,7 @@ namespace Gameplay
         public void Hit()
         {
             OnHit();
-            // Lógica de exibir animação
+            Instantiate(ExplosionParticle, transform.position, quaternion.identity);
             Destroy(gameObject);
         }
     }
